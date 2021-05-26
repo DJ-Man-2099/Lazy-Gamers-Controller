@@ -16,9 +16,11 @@ def get_pid(name):
 
 # Pass camera source as 0 for built-in webcam, 1 for external camera
 capture = cv.VideoCapture(0)
+Game_Path = './Game Main Scene/Game.x86_64'
+Game_Name = "Game.x86_64" 
 
-process = subprocess.Popen("./Game Main Scene/Game.x86_64", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-while not get_pid("Game.x86_64"):
+process = subprocess.Popen(Game_Path, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+while not get_pid(Game_Name):
         print("Game is opening")
 
 
@@ -122,10 +124,8 @@ while True:
         print(f"Defects: {l}\tAngle: {angle}")
         """ Chrome Dino Game """
         if l == 1:
-            """ pin = process.stdin
-            pout = process.stdout
-            pin.write('a') """
-            if angle>=150 and angle<=180:
+            #for Linux
+            """ if angle>=150 and angle<=180:
                 print('pressing up')
                 pyautogui.keyDown("up")
             elif angle>=80 and angle<=150:
@@ -139,7 +139,8 @@ while True:
         else:
             pyautogui.keyUp("up")
             pyautogui.keyUp("left")
-            pyautogui.keyUp("right")
+            pyautogui.keyUp("right") """
+            #for Windows
 
     except:
         pass
