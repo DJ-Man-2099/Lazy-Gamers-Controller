@@ -7,15 +7,21 @@ from color_filter import *
 from images_stack import *   
 
 import subprocess
+import psutil
 
 def process_running(process_name):
-    call = 'TASKLIST', '/FI', 'imagename eq %s' % process_name
-    # use buildin check_output right away
-    output = subprocess.check_output(call).decode()
-    # check in last line for process name
-    last_line = output.strip().split('\r\n')[-1]
-    # because Fail message could be translated
-    return last_line.lower().startswith(process_name.lower())
+    '''
+    Check if there is any running process that contains the given name processName.
+    '''
+    #Iterate over the all the running process
+    for proc in psutil.process_iter():
+        try:
+            # Check if process name contains the given name string.
+            if process_name.lower() in proc.name().lower():
+                return True
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
+    return False;
     
 
 # Pass camera source as 0 for built-in webcam, 1 for external camera
@@ -25,7 +31,7 @@ Game_Name = "Image Processing Project.exe"
 
 process = subprocess.Popen(Game_Path, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 while not process_running(Game_Name):
-        print("Game is opening")
+        print(process_running(Game_Name))
 
 
 hsv_trackbars_create("Color Filter")
