@@ -4,23 +4,27 @@ import math
 import pyautogui
 
 from color_filter import *
-from images_stack import *
+from images_stack import *   
 
 import subprocess
 
-def get_pid(name):
-    try:
-        return subprocess.check_output(["pidof", name])
-    except subprocess.CalledProcessError as identifier:
-        return None
+def process_running(process_name):
+    call = 'TASKLIST', '/FI', 'imagename eq %s' % process_name
+    # use buildin check_output right away
+    output = subprocess.check_output(call).decode()
+    # check in last line for process name
+    last_line = output.strip().split('\r\n')[-1]
+    # because Fail message could be translated
+    return last_line.lower().startswith(process_name.lower())
+    
 
 # Pass camera source as 0 for built-in webcam, 1 for external camera
 capture = cv.VideoCapture(0)
-Game_Path = './Game Main Scene/Game.x86_64'
-Game_Name = "Game.x86_64" 
+Game_Path = './Windows Car Game/Image Processing Project.exe'
+Game_Name = "Image Processing Project.exe" 
 
 process = subprocess.Popen(Game_Path, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-while not get_pid(Game_Name):
+while not process_running(Game_Name):
         print("Game is opening")
 
 
@@ -125,7 +129,7 @@ while True:
         """ Chrome Dino Game """
         if l == 1:
             #for Linux
-            """ if angle>=150 and angle<=180:
+            if angle>=150 and angle<=180:
                 print('pressing up')
                 pyautogui.keyDown("up")
             elif angle>=80 and angle<=150:
@@ -139,7 +143,7 @@ while True:
         else:
             pyautogui.keyUp("up")
             pyautogui.keyUp("left")
-            pyautogui.keyUp("right") """
+            pyautogui.keyUp("right")
             #for Windows
 
     except:
