@@ -21,14 +21,15 @@ def process_running(process_name):
                 return True
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
-    return False;
-    
+    return False
 
+    
 # Pass camera source as 0 for built-in webcam, 1 for external camera
 capture = cv.VideoCapture(0)
 Game_Path = './Windows Car Game/Image Processing Project.exe'
+#Game_Path = "./Image Processing Project/Game.x86_64"
 Game_Name = "Image Processing Project.exe" 
-
+#Game_Name = "Game.x86_64"
 process = subprocess.Popen(Game_Path, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 while not process_running(Game_Name):
         print(process_running(Game_Name))
@@ -133,24 +134,33 @@ while True:
         (x, y), (MA, ma), angle = cv.fitEllipse(approx)
         print(f"Defects: {l}\tAngle: {angle}")
         """ Chrome Dino Game """
-        if l == 1:
+        if l >= 1:
             #for Linux
-            if angle>=150 and angle<=180:
+            if (angle>=150 and angle<=180) or (angle>=0 and angle<=20):
                 print('pressing up')
                 pyautogui.keyDown("up")
-            elif angle>=80 and angle<=150:
+                pyautogui.keyUp("left")
+                pyautogui.keyUp("right")
+            elif angle>=110 and angle<=150:
+                print('pressing left')
                 pyautogui.keyDown("left")
-            elif angle>=45 and angle<=80:
+                pyautogui.keyDown("up")
+                pyautogui.keyUp("right")
+            elif angle>=20 and angle<=90:
+                print('pressing right')
                 pyautogui.keyDown("right")
+                pyautogui.keyDown("up")
+                pyautogui.keyUp("left")
             else:
+                print('stopping')
                 pyautogui.keyUp("up")
                 pyautogui.keyUp("left")
                 pyautogui.keyUp("right")
         else:
+            print('stopping')
             pyautogui.keyUp("up")
             pyautogui.keyUp("left")
             pyautogui.keyUp("right")
-            #for Windows
 
     except:
         pass
