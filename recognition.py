@@ -136,12 +136,12 @@ while True:
         """ Chrome Dino Game """
         if l >= 1:
             #for Linux
-            if (angle>=150 and angle<=180) or (angle>=0 and angle<=20):
+            if (angle>=160 and angle<=180) or (angle>=0 and angle<=20):
                 print('pressing up')
                 pyautogui.keyDown("up")
                 pyautogui.keyUp("left")
                 pyautogui.keyUp("right")
-            elif angle>=110 and angle<=150:
+            elif angle>=110 and angle<=160:
                 print('pressing left')
                 pyautogui.keyDown("left")
                 pyautogui.keyDown("up")

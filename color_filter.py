@@ -23,7 +23,8 @@ def hsv_trackbars_pos(unused=None, name=None):
 def hsv_trackbars_create(name):
 
     """ Color Detection Trackbars """
-    cv.namedWindow(name)
+    cv.namedWindow(name, cv.WINDOW_FREERATIO)
+    cv.resizeWindow(name, 500,500)
     cv.createTrackbar("Hue (Min)", name, 0, 179, hsv_trackbars_pos)
     cv.createTrackbar("Hue (Max)", name, 179, 179, hsv_trackbars_pos)
     cv.createTrackbar("Sat (Min)", name, 0, 255, hsv_trackbars_pos)
