@@ -1,13 +1,16 @@
 import cv2 as cv
 import numpy as np
 import math
-import pyautogui
+#import pyautogui
+from pynput.keyboard import Key, Controller
 
 from color_filter import *
 from images_stack import *   
 
 import subprocess
 import psutil
+
+Keyboard = Controller()
 
 def process_running(process_name):
     '''
@@ -136,31 +139,31 @@ while True:
         """ Chrome Dino Game """
         if l >= 1:
             #for Linux
-            if (angle>=160 and angle<=180) or (angle>=0 and angle<=20):
+            if (angle>=150 and angle<=180) or (angle>=0 and angle<=20):
                 print('pressing up')
-                pyautogui.keyDown("up")
-                pyautogui.keyUp("left")
-                pyautogui.keyUp("right")
-            elif angle>=110 and angle<=160:
+                Keyboard.press(Key.up)
+                Keyboard.release(Key.left)
+                Keyboard.release(Key.right)
+            elif angle>=110 and angle<=150:
                 print('pressing left')
-                pyautogui.keyDown("left")
-                pyautogui.keyDown("up")
-                pyautogui.keyUp("right")
+                Keyboard.press(Key.up)
+                Keyboard.press(Key.left)
+                Keyboard.release(Key.right)
             elif angle>=20 and angle<=90:
                 print('pressing right')
-                pyautogui.keyDown("right")
-                pyautogui.keyDown("up")
-                pyautogui.keyUp("left")
+                Keyboard.press(Key.up)
+                Keyboard.release(Key.left)
+                Keyboard.press(Key.right)
             else:
                 print('stopping')
-                pyautogui.keyUp("up")
-                pyautogui.keyUp("left")
-                pyautogui.keyUp("right")
+                Keyboard.release(Key.up)
+                Keyboard.release(Key.left)
+                Keyboard.release(Key.right)
         else:
             print('stopping')
-            pyautogui.keyUp("up")
-            pyautogui.keyUp("left")
-            pyautogui.keyUp("right")
+            Keyboard.release(Key.up)
+            Keyboard.release(Key.left)
+            Keyboard.release(Key.right)
 
     except:
         pass
